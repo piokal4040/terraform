@@ -18,11 +18,13 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: azure-service-connection            # ← FIXED
-    backendAzureRmResourceGroupName: my-tfstate-rg    # ← FILL IN
-    backendAzureRmStorageAccountName: mytfstateacc    # ← FILL IN
+    backendServiceArm: ''                        # ← leave empty for managed identity
+    backendAzureRmResourceGroupName: my-tfstate-rg
+    backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
+    useAzureRmManagedIdentity: true              # Enable managed identity
+    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'  # User-assigned MSI Client ID
 
 # Terraform Plan
 - task: TerraformTaskV4@4
@@ -30,7 +32,8 @@ steps:
   inputs:
     provider: azurerm
     command: plan
-    environmentServiceNameAzureRM: azure-service-connection   # ← FIXED
+    useAzureRmManagedIdentity: true
+    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
 
 # Terraform Apply
 - task: TerraformTaskV4@4
@@ -38,4 +41,5 @@ steps:
   inputs:
     provider: azurerm
     command: apply
-    environmentServiceNameAzureRM: azure-service-connection   # ← FIXED
+    useAzureRmManagedIdentity: true
+    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
