@@ -18,11 +18,12 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: 'azure-service-connection'  # Leave empty when using SP directly
+    backendServiceArm: azure-service-connection          # Required for backend
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
     azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
     azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
@@ -33,6 +34,7 @@ steps:
   inputs:
     provider: azurerm
     command: plan
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
     azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
     azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
@@ -43,6 +45,7 @@ steps:
   inputs:
     provider: azurerm
     command: apply
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
     azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
     azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
