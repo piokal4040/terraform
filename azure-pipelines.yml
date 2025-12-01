@@ -18,7 +18,7 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: my-azure-connection            # ← FIXED
+    backendServiceArm: azure-service-connection            # ← FIXED
     backendAzureRmResourceGroupName: my-tfstate-rg    # ← FILL IN
     backendAzureRmStorageAccountName: mytfstateacc    # ← FILL IN
     backendAzureRmContainerName: tfstate
@@ -30,7 +30,7 @@ steps:
   inputs:
     provider: azurerm
     command: plan
-    environmentServiceNameAzureRM: my-azure-connection   # ← FIXED
+    environmentServiceNameAzureRM: azure-service-connection   # ← FIXED
 
 # Terraform Apply
 - task: TerraformTaskV4@4
@@ -38,4 +38,4 @@ steps:
   inputs:
     provider: azurerm
     command: apply
-    environmentServiceNameAzureRM: my-azure-connection   # ← FIXED
+    environmentServiceNameAzureRM: azure-service-connection   # ← FIXED
