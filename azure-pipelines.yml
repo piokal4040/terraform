@@ -18,7 +18,7 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: ''                         # Leave empty when using SP directly
+    backendServiceArm: 'azure-service-connection'  # Leave empty when using SP directly
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
