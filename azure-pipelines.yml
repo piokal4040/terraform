@@ -4,7 +4,7 @@ trigger:
 # IMPORTANT: You do NOT have Microsoft-hosted agents enabled.
 # Replace with your self-hosted agent pool name.
 pool:
-  name: Default    # ← change ONLY if your agent pool has a different name
+  name: Default     # ← change ONLY if your agent pool has a different name
 
 steps:
 - task: TerraformInstaller@1
@@ -18,13 +18,14 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: azure-service-connection            # Required for backend
+    backendServiceArm: ''                         # Leave empty when using SP directly
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
-    useAzureRmManagedIdentity: true                        # Use MSI for provider
-    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
+    azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
+    azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
+    azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
 
 # Terraform Plan
 - task: TerraformTaskV4@4
@@ -32,9 +33,9 @@ steps:
   inputs:
     provider: azurerm
     command: plan
-    environmentServiceNameAzureRM: azure-service-connection   # Required by task, can be ignored for MSI auth
-    useAzureRmManagedIdentity: true
-    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
+    azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
+    azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
+    azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
 
 # Terraform Apply
 - task: TerraformTaskV4@4
@@ -42,6 +43,6 @@ steps:
   inputs:
     provider: azurerm
     command: apply
-    environmentServiceNameAzureRM: azure-service-connection   # Required by task, can be ignored for MSI auth
-    useAzureRmManagedIdentity: true
-    managedIdentityClientId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
+    azureServicePrincipalClientId: 'b5607e7e-7e92-4d23-9cfb-82dbaff439e6'
+    azureServicePrincipalKey: '5cY8Q~agwdCzGIgd6eioVeW6FLH6z5StHMlpLcl'
+    azureTenantId: 'c5acaccb-b545-4150-bb66-2d947b28bbd1'
