@@ -4,7 +4,7 @@ trigger:
 # IMPORTANT: You do NOT have Microsoft-hosted agents enabled.
 # Replace with your self-hosted agent pool name.
 pool:
-  name: piotr120VM     # ← change ONLY if your agent pool has a different name
+  name: Default    # ← change ONLY if your agent pool has a different name
 
 steps:
 - task: TerraformInstaller@1
