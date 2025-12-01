@@ -18,12 +18,12 @@ steps:
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: pk_service_connection          # Required for backend
+    backendServiceArm: azure-service-connection          # Required for backend
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
-    environmentServiceNameAzureRM: pk_service_connection
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
     azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
     azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
@@ -34,7 +34,7 @@ steps:
   inputs:
     provider: azurerm
     command: plan
-    environmentServiceNameAzureRM: pk_service_connection
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
     azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
     azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
@@ -45,6 +45,6 @@ steps:
   inputs:
     provider: azurerm
     command: apply
-    environmentServiceNameAzureRM: pk_service_connection
+    environmentServiceNameAzureRM: azure-service-connection
     azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
     azureServicePrincipalKey: $(AZURE_SP_SECRET)
