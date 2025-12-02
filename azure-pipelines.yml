@@ -24,9 +24,18 @@ steps:
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
     environmentServiceNameAzureRM: azure-service-connection
-    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
-    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
+
+# ----------------------------------------------------------------------
+# ADD THIS: Terraform Import (needed because the RG already exists)
+# ----------------------------------------------------------------------
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Import existing RG'
+  inputs:
+    provider: azurerm
+    command: custom
+    customCommand: 'import azurerm_resource_group.example "/subscriptions/cd43f6f6-35d4-42e6-a8bc-efc6e2fb7aa2/resourceGroups/example-resources"'
+    environmentServiceNameAzureRM: azure-service-connection
+# ----------------------------------------------------------------------
 
 # Terraform Plan
 - task: TerraformTaskV4@4
@@ -35,9 +44,6 @@ steps:
     provider: azurerm
     command: plan
     environmentServiceNameAzureRM: azure-service-connection
-    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
-    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
 
 # Terraform Apply
 - task: TerraformTaskV4@4
@@ -46,6 +52,3 @@ steps:
     provider: azurerm
     command: apply
     environmentServiceNameAzureRM: azure-service-connection
-    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    #azureServicePrincipalKey: $(AZURE_SP_SECRET)
-    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3
