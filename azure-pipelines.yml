@@ -24,9 +24,9 @@ steps:
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
     environmentServiceNameAzureRM: azure-service-connection
-    azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
-    azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
 
 # Terraform Plan
 - task: TerraformTaskV4@4
@@ -35,9 +35,9 @@ steps:
     provider: azurerm
     command: plan
     environmentServiceNameAzureRM: azure-service-connection
-    azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
-    azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
 
 # Terraform Apply
 - task: TerraformTaskV4@4
@@ -46,5 +46,6 @@ steps:
     provider: azurerm
     command: apply
     environmentServiceNameAzureRM: azure-service-connection
-    azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
-    azureServicePrincipalKey: $(AZURE_SP_SECRET)
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3
