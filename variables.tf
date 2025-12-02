@@ -10,7 +10,7 @@ default     = "dfdfdfdfddvfhjujmnbs12_43"
 variable "location" {
   description = "The Azure region where resources will be created"
   type        = string
-  default     = "uksouth"
+  default     = "Poland Central"
 }
 
 variable "app_service_plan_name" {
