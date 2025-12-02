@@ -1,7 +1,10 @@
-trigger: none   # This pipeline should only run manually
+trigger:
+- main
 
+# IMPORTANT: You do NOT have Microsoft-hosted agents enabled.
+# Replace with your self-hosted agent pool name.
 pool:
-  name: Default   # Change if your self-hosted agent pool has a different name
+  name: Default     # ← change ONLY if your agent pool has a different name
 
 steps:
 - task: TerraformInstaller@1
@@ -9,25 +12,40 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# Terraform Init (needed before import)
+# Terraform Init
 - task: TerraformTaskV4@4
   displayName: 'Terraform Init'
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: azure-service-connection
+    backendServiceArm: azure-service-connection          # Required for backend
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
     environmentServiceNameAzureRM: azure-service-connection
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
 
-# Terraform Import step
+# Terraform Plan
 - task: TerraformTaskV4@4
-  displayName: 'Terraform Import ResourceGroup'
+  displayName: 'Terraform Plan'
   inputs:
     provider: azurerm
-    command: import
-    resourceAddress: 'azurerm_resource_group.example'
-    resourceId: '/subscriptions/cd43f6f6-35d4-42e6-a8bc-efc6e2fb7aa2/resourceGroups/example-resources'
+    command: plan
     environmentServiceNameAzureRM: azure-service-connection
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)        # Secret variable
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
+
+# Terraform Apply
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Apply'
+  inputs:
+    provider: azurerm
+    command: apply
+    environmentServiceNameAzureRM: azure-service-connection
+    #azureServicePrincipalClientId: '60118fc8-4ca0-423a-8c91-e9020de17359'
+    #azureServicePrincipalKey: $(AZURE_SP_SECRET)
+    #azureTenantId: '16b3c013-d300-468d-ac64-7eda0820b6d3'
