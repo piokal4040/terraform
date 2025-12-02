@@ -1,10 +1,7 @@
-trigger:
-- main
+trigger: none   # This pipeline should only run manually
 
-# IMPORTANT: You do NOT have Microsoft-hosted agents enabled.
-# Replace with your self-hosted agent pool name.
 pool:
-  name: Default     # ← change ONLY if your agent pool has a different name
+  name: Default   # Change if your self-hosted agent pool has a different name
 
 steps:
 - task: TerraformInstaller@1
@@ -12,43 +9,25 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# Terraform Init
+# Terraform Init (needed before import)
 - task: TerraformTaskV4@4
   displayName: 'Terraform Init'
   inputs:
     provider: azurerm
     command: init
-    backendServiceArm: azure-service-connection          # Required for backend
+    backendServiceArm: azure-service-connection
     backendAzureRmResourceGroupName: my-tfstate-rg
     backendAzureRmStorageAccountName: mytfstateacc
     backendAzureRmContainerName: tfstate
     backendAzureRmKey: terraform.tfstate
     environmentServiceNameAzureRM: azure-service-connection
 
-# ----------------------------------------------------------------------
-# ADD THIS: Terraform Import (needed because the RG already exists)
-# ----------------------------------------------------------------------
+# Terraform Import step
 - task: TerraformTaskV4@4
-  displayName: 'Terraform Import existing RG'
+  displayName: 'Terraform Import ResourceGroup'
   inputs:
     provider: azurerm
-    command: custom
-    customCommand: 'import azurerm_resource_group.example "/subscriptions/cd43f6f6-35d4-42e6-a8bc-efc6e2fb7aa2/resourceGroups/example-resources"'
-    environmentServiceNameAzureRM: azure-service-connection
-# ----------------------------------------------------------------------
-
-# Terraform Plan
-- task: TerraformTaskV4@4
-  displayName: 'Terraform Plan'
-  inputs:
-    provider: azurerm
-    command: plan
-    environmentServiceNameAzureRM: azure-service-connection
-
-# Terraform Apply
-- task: TerraformTaskV4@4
-  displayName: 'Terraform Apply'
-  inputs:
-    provider: azurerm
-    command: apply
+    command: import
+    resourceAddress: 'azurerm_resource_group.example'
+    resourceId: '/subscriptions/cd43f6f6-35d4-42e6-a8bc-efc6e2fb7aa2/resourceGroups/example-resources'
     environmentServiceNameAzureRM: azure-service-connection
